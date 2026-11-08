@@ -1,4 +1,8 @@
+from idlelib.multicall import MC_ENTER
+
 import flet as ft
+from flet.controls import alignment
+
 from UI.alert import AlertManager
 
 '''
@@ -37,10 +41,13 @@ class View:
 
         # --- Sezione 2: Filtraggio ---
         # TODO
-
+        self.dropdown_genere = ft.Dropdown(label="Genere", width= 200, on_select= self.controller.handle_genere)
+        self.dropdown_biblioteca = ft.Dropdown(label="Biblioteca", width= 400, on_select=self.controller.handle_biblioteca)
+        self.controller.popola_dropdown()
         # Sezione 3: Libri
         # TODO
-
+        self.btn_libri = ft.Button("Mostra Libri", on_click=self.controller.handle_libri)
+        self.libri = ft.ListView()
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
 
@@ -54,9 +61,12 @@ class View:
 
             # Sezione 2: Filtraggio
             # TODO
-
+            ft.Row([self.dropdown_biblioteca, self.dropdown_genere], alignment= ft.MainAxisAlignment.CENTER),
+            ft.Divider(),
             # Sezione 3: Libri
             # TODO
+            self.btn_libri,
+            self.libri
         )
 
         self.page.scroll = "adaptive"
